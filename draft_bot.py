@@ -11,6 +11,7 @@ from telegram.ext import (
 import requests
 
 from keys import TOKEN, API_KEY_WEATHER
+from weather import weather
 
 
 logging.basicConfig(
@@ -64,6 +65,7 @@ async def item_selected(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     else:
         return ConversationHandler.END  
     
+'''
 async def weather(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     city_name = update.message.text
 
@@ -82,6 +84,7 @@ async def weather(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f'Сейчас в {city_name} {description}.\n Температура {temperature} °C.\n Влажность {humidity}%.')
     else:
         await update.message.reply_text("Город не найден. Попробуйте другой город.")
+'''
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 

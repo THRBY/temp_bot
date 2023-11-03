@@ -8,6 +8,10 @@ from telegram.ext import (
     CallbackQueryHandler,
     filters)
 import requests
+from keys import TOKEN, API_KEY_WEATHER
+
+# API-ключ от OpenWeatherMap
+API_KEY = API_KEY_WEATHER
 
 async def weather(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     city_name = update.message.text
