@@ -11,6 +11,7 @@ from telegram.ext import (
 import requests
 
 from keys import TOKEN, OWN_TOKEN
+from weather import weather
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -34,8 +35,8 @@ WEATHER = range(1)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text('Привет! Я бот ... . Могу подказать погоду')
-    
-async def weather(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+
+async def command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # Send text meassage
     message_text = update.message.text.lower()
 
@@ -44,19 +45,9 @@ async def weather(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         # Getting the name of the city
         location = message_text.split('погода', 1)[1].strip()
 
-        url = f"https://api.openweathermap.org/data/2.5/weather?q={location}&lang=ru&units=metric&appid={OWN_TOKEN}"
-        response = requests.get(url)
-        weather_data = response.json()
+        weather_info = await weather(location)
 
-        try:
-            description = weather_data['weather'][0]['description']
-            temperature = weather_data['main']['temp']
-            humidity = weather_data['main']['humidity']
-            await update.message.reply_text(f'Текущая погода в {location}:\n Температура: {temperature}°C\n Статус: {description}\n Влажность {humidity}%.')
-            
-        except Exception as e:
-            await update.message.reply_text(f"Произошла ошибка при получении погоды: {e}")  
-        
+        await update.message.reply_text(weather_info)
     else:
         await update.message.reply_text("Город не найден. Попробуйте другой город.")
 
@@ -77,7 +68,7 @@ def main() -> None:
        
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("cancel", cancel))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, weather))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, command))
     application.run_polling()
 
 if __name__ == "__main__":

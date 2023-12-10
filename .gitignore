@@ -1,3 +1,4 @@
 my_venv/*
 keys.py
 __pycache__/*
+.idea/*
