@@ -58,7 +58,7 @@ async def command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
         await update.message.reply_text(wiki_page)
     else:
-        await update.message.reply_text("Город не найден. Попробуйте другой город.")
+        await update.message.reply_text("ЯННП.")
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 

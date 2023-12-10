@@ -4,7 +4,7 @@ from keys import OWN_TOKEN
 # API-ключ от OpenWeatherMap
 OWN_TOKEN = OWN_TOKEN
 
-async def weather(location: str) -> None:
+async def weather(location: str) -> str:
     url = f"https://api.openweathermap.org/data/2.5/weather?q={location}&lang=ru&units=metric&appid={OWN_TOKEN}"
     response = requests.get(url)
     weather_data = response.json()

@@ -1,6 +1,6 @@
 import requests
 
-async def wikipedia_page(title: str) -> None:
+async def wikipedia_page(title: str) -> str:
     language_code = 'ru'
 
     # Формируем URL запроса к Wikipedia API
