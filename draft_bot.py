@@ -8,10 +8,12 @@ from telegram.ext import (
     ConversationHandler,
     CallbackQueryHandler,
     filters)
+
 import requests
 
 from keys import TOKEN, OWN_TOKEN
 from weather import weather
+from wikipedia_page import wikipedia_page
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -48,6 +50,13 @@ async def command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         weather_info = await weather(location)
 
         await update.message.reply_text(weather_info)
+    elif 'что такое' in message_text:
+        # Getting the answer of wiki
+        title = message_text.split('что такое', 1)[1].strip()
+
+        wiki_page = await  wikipedia_page(title)
+
+        await update.message.reply_text(wiki_page)
     else:
         await update.message.reply_text("Город не найден. Попробуйте другой город.")
 
